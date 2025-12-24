@@ -1,6 +1,20 @@
 #![allow(clippy::cast_possible_truncation, clippy::cast_precision_loss)]
 
+mod branchlut;
+mod branchlut2;
+mod count;
+mod countdecimaldigit;
+mod countlut;
+mod itoa_jeaiii;
+mod itoa_ljust_impl;
+mod lut;
+mod mwilson;
+mod naive;
+mod tmueller;
+mod unnamed;
+mod unrolledlut;
 mod unsigned;
+mod yy;
 
 use crate::unsigned::Unsigned;
 use arrayvec::ArrayString;
