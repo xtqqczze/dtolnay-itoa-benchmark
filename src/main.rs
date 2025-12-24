@@ -1,3 +1,5 @@
+#![allow(clippy::cast_possible_truncation)]
+
 mod unsigned;
 
 use crate::unsigned::Unsigned;
