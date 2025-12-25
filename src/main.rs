@@ -9,6 +9,7 @@ mod branchlut2;
 mod count;
 mod countdecimaldigit;
 mod countlut;
+mod digitslut;
 mod itoa_jeaiii;
 mod itoa_ljust_impl;
 mod lut;
@@ -98,15 +99,21 @@ static IMPLS: &[Impl] = &[
         u128: Some(|_value, f| f("")),
     },
     Impl {
-        name: "naive",
-        u32: None,
-        u64: Some(naive::u64toa_naive),
-        u128: None,
-    },
-    Impl {
         name: "count",
         u32: None,
         u64: Some(count::u64toa_count),
+        u128: None,
+    },
+    Impl {
+        name: "lut",
+        u32: None,
+        u64: Some(lut::u64toa_lut),
+        u128: None,
+    },
+    Impl {
+        name: "naive",
+        u32: None,
+        u64: Some(naive::u64toa_naive),
         u128: None,
     },
 ];
