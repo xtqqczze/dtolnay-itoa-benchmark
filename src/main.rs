@@ -10,6 +10,7 @@
     clippy::unreadable_literal
 )]
 
+mod bcd;
 mod branchlut;
 mod branchlut2;
 mod count;
@@ -27,7 +28,6 @@ mod unnamed;
 mod unrolledlut;
 mod unsigned;
 mod yy;
-mod zmij;
 
 use crate::unsigned::Unsigned;
 use arrayvec::ArrayString;
@@ -148,6 +148,12 @@ static IMPLS: &[Impl] = &[
         u128: None,
     },
     Impl {
+        name: "bcd",
+        u32: None,
+        u64: Some(bcd::u64toa_bcd),
+        u128: None,
+    },
+    Impl {
         name: "jeaiii",
         u32: None,
         u64: Some(itoa_jeaiii::u64toa_jeaiii),
@@ -181,12 +187,6 @@ static IMPLS: &[Impl] = &[
         name: "yy",
         u32: None,
         u64: Some(yy::u64toa_yy),
-        u128: None,
-    },
-    Impl {
-        name: "zmij",
-        u32: None,
-        u64: Some(zmij::write_significand),
         u128: None,
     },
 ];
