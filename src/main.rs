@@ -174,6 +174,12 @@ static IMPLS: &[Impl] = &[
         u64: Some(unrolledlut::u64toa_unrolledlut),
         u128: None,
     },
+    Impl {
+        name: "yy",
+        u32: None,
+        u64: Some(yy::u64toa_yy),
+        u128: None,
+    },
 ];
 
 fn fill<T, const N: usize>(rng: &mut SmallRng, data: &mut [Vec<T>; N], count: usize)
