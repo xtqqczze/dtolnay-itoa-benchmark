@@ -106,6 +106,12 @@ static IMPLS: &[Impl] = &[
         u128: None,
     },
     Impl {
+        name: "branchlut2",
+        u32: None,
+        u64: Some(branchlut2::u64toa_branchlut2),
+        u128: None,
+    },
+    Impl {
         name: "count",
         u32: None,
         u64: Some(count::u64toa_count),
