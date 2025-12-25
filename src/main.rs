@@ -15,7 +15,7 @@ mod countdecimaldigit;
 mod countlut;
 mod digitslut;
 mod itoa_jeaiii;
-mod itoa_ljust_impl;
+mod itoa_ljust;
 mod lut;
 mod mwilson;
 mod naive;
@@ -136,6 +136,12 @@ static IMPLS: &[Impl] = &[
         name: "naive",
         u32: None,
         u64: Some(naive::u64toa_naive),
+        u128: None,
+    },
+    Impl {
+        name: "amartin",
+        u32: None,
+        u64: Some(itoa_ljust::u64toa_amartin),
         u128: None,
     },
     Impl {
