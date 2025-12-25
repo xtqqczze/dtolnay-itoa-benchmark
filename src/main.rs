@@ -143,6 +143,12 @@ static IMPLS: &[Impl] = &[
         u64: Some(itoa_jeaiii::u64toa_jeaiii),
         u128: None,
     },
+    Impl {
+        name: "mwilson",
+        u32: None,
+        u64: Some(mwilson::u64toa_mwilson),
+        u128: None,
+    },
 ];
 
 fn fill<T, const N: usize>(rng: &mut SmallRng, data: &mut [Vec<T>; N], count: usize)
