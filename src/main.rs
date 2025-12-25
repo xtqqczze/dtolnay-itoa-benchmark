@@ -37,16 +37,16 @@ struct Data {
 }
 
 impl Data {
-    fn random() -> Self {
+    fn random(count: usize) -> Self {
         let mut rng = SmallRng::seed_from_u64(1);
         let mut data = Data {
             u32: [const { Vec::new() }; 10],
             u64: [const { Vec::new() }; 20],
             u128: [const { Vec::new() }; 39],
         };
-        fill(&mut rng, &mut data.u32);
-        fill(&mut rng, &mut data.u64);
-        fill(&mut rng, &mut data.u128);
+        fill(&mut rng, &mut data.u32, count);
+        fill(&mut rng, &mut data.u64, count);
+        fill(&mut rng, &mut data.u128, count);
         data
     }
 }
@@ -94,7 +94,7 @@ static IMPLS: &[Impl] = &[
     },
 ];
 
-fn fill<T, const N: usize>(rng: &mut SmallRng, data: &mut [Vec<T>; N])
+fn fill<T, const N: usize>(rng: &mut SmallRng, data: &mut [Vec<T>; N], count: usize)
 where
     T: Unsigned,
 {
@@ -106,8 +106,8 @@ where
             .saturating_sub(T::ONE)
             .wrapping_sub(T::ONE);
         let distr = Uniform::try_from(lo..=hi).unwrap();
-        vec.reserve_exact(COUNT);
-        for _ in 0..COUNT {
+        vec.reserve_exact(count);
+        for _ in 0..count {
             vec.push(distr.sample(rng));
         }
     }
@@ -134,13 +134,13 @@ where
         println!(
             "    ({}, {:.2})",
             i + 1,
-            duration.as_secs_f64() * 1e9 / (PASSES * COUNT) as f64,
+            duration.as_secs_f64() * 1e9 / (PASSES * vec.len()) as f64,
         );
     }
 }
 
 fn main() {
-    let data = Data::random();
+    let data = Data::random(COUNT);
 
     for imp in IMPLS {
         println!("{}", imp.name);
