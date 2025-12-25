@@ -31,11 +31,9 @@ pub fn u64toa_bcd(value: u64, f: &dyn Fn(&str)) {
         let bytes = (bcd | ZEROS).to_be_bytes();
         f(unsafe { str::from_utf8_unchecked(&bytes[leading_zeros..]) });
     } else if value < 10_000_000_000_000_000 {
-        let bbccddee = (value / 100_000_000) as u32;
-        let ffgghhii = (value % 100_000_000) as u32;
-        let bcd_hi = to_bcd8(bbccddee);
+        let bcd_hi = to_bcd8((value / 100_000_000) as u32);
         let leading_zeros = bcd_hi.leading_zeros() as usize / 8;
-        let bcd_lo = to_bcd8(ffgghhii);
+        let bcd_lo = to_bcd8((value % 100_000_000) as u32);
         let bytes = [
             (bcd_hi | ZEROS).to_be_bytes(),
             (bcd_lo | ZEROS).to_be_bytes(),
