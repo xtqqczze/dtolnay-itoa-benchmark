@@ -5,6 +5,10 @@ fn to_bcd4(abcd: u16) -> u32 {
     a_b_c_d
 }
 
+pub fn u32toa_bcd4(value: u32, f: &dyn Fn(&str)) {
+    u64toa_bcd4(u64::from(value), f);
+}
+
 pub fn u64toa_bcd4(value: u64, f: &dyn Fn(&str)) {
     if value < 10_000 {
         let bcd = to_bcd4(value as u16);

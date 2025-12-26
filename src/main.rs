@@ -151,7 +151,7 @@ static IMPLS: &[Impl] = &[
     },
     Impl {
         name: "bcd4",
-        u32: None,
+        u32: Some(bcd4::u32toa_bcd4),
         u64: Some(bcd4::u64toa_bcd4),
         u128: None,
     },
