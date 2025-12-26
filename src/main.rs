@@ -5,6 +5,7 @@
     clippy::cast_sign_loss,
     clippy::let_and_return,
     clippy::many_single_char_names,
+    clippy::nonminimal_bool,
     clippy::similar_names,
     clippy::too_many_lines,
     clippy::unreadable_literal
