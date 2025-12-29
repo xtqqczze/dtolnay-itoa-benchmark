@@ -29,16 +29,24 @@ where
     T: Unsigned,
 {
     for (i, vec) in data.iter_mut().enumerate() {
-        let lo = T::TEN.pow(i as u32) - T::from(i == 0);
-        let hi = T::TEN
-            .saturating_pow(i as u32 + 1)
-            .wrapping_add(T::ONE)
-            .saturating_sub(T::ONE)
-            .wrapping_sub(T::ONE);
-        let distr = Uniform::new_inclusive(lo, hi).unwrap();
+        let distr = uniform_distribution_for_length(i + 1);
         vec.reserve_exact(count);
         for _ in 0..count {
             vec.push(distr.sample(rng));
         }
     }
+}
+
+fn uniform_distribution_for_length<T>(len: usize) -> Uniform<T>
+where
+    T: Unsigned,
+{
+    assert!(len >= 1);
+    let lo = T::TEN.pow(len as u32 - 1) - T::from(len == 1);
+    let hi = T::TEN
+        .saturating_pow(len as u32)
+        .wrapping_add(T::ONE)
+        .saturating_sub(T::ONE)
+        .wrapping_sub(T::ONE);
+    Uniform::new_inclusive(lo, hi).unwrap()
 }
