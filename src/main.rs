@@ -21,6 +21,7 @@ mod branchlut2;
 mod count;
 mod countdecimaldigit;
 mod countlut;
+mod data;
 mod digitslut;
 mod itoa_jeaiii;
 mod itoa_ljust;
@@ -37,13 +38,11 @@ mod unsigned;
 mod yy;
 
 use crate::args::Type;
+use crate::data::Data;
 use crate::unsigned::Unsigned;
 use anyhow::Result;
 use arrayvec::ArrayString;
 use lexical_core::FormattedSize;
-use rand::SeedableRng as _;
-use rand::distr::{Distribution as _, Uniform};
-use rand::rngs::SmallRng;
 use std::any;
 use std::fmt::Write as _;
 use std::hint;
@@ -53,27 +52,6 @@ use to_arraystring::ToArrayString as _;
 const COUNT: usize = if cfg!(miri) { 20 } else { 100_000 };
 const TRIALS: usize = if cfg!(miri) { 1 } else { 8 };
 const PASSES: usize = if cfg!(miri) { 1 } else { 25 };
-
-struct Data {
-    u32: [Vec<u32>; 10],
-    u64: [Vec<u64>; 20],
-    u128: [Vec<u128>; 39],
-}
-
-impl Data {
-    fn random(count: usize) -> Self {
-        let mut rng = SmallRng::seed_from_u64(1);
-        let mut data = Data {
-            u32: [const { Vec::new() }; 10],
-            u64: [const { Vec::new() }; 20],
-            u128: [const { Vec::new() }; 39],
-        };
-        fill(&mut rng, &mut data.u32, count);
-        fill(&mut rng, &mut data.u64, count);
-        fill(&mut rng, &mut data.u128, count);
-        data
-    }
-}
 
 type F<T> = fn(T, &dyn Fn(&str));
 
@@ -244,25 +222,6 @@ static IMPLS: &[Impl] = &[
         u128: None,
     },
 ];
-
-fn fill<T, const N: usize>(rng: &mut SmallRng, data: &mut [Vec<T>; N], count: usize)
-where
-    T: Unsigned,
-{
-    for (i, vec) in data.iter_mut().enumerate() {
-        let lo = T::TEN.pow(i as u32) - T::from(i == 0);
-        let hi = T::TEN
-            .saturating_pow(i as u32 + 1)
-            .wrapping_add(T::ONE)
-            .saturating_sub(T::ONE)
-            .wrapping_sub(T::ONE);
-        let distr = Uniform::new_inclusive(lo, hi).unwrap();
-        vec.reserve_exact(count);
-        for _ in 0..count {
-            vec.push(distr.sample(rng));
-        }
-    }
-}
 
 fn measure<T, const N: usize>(data: &[Vec<T>; N], test: F<T>)
 where
