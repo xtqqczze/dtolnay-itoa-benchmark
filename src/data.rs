@@ -5,13 +5,13 @@ use rand::rngs::SmallRng;
 use rand::seq::SliceRandom as _;
 use std::array;
 
-pub(crate) struct Data {
+pub struct Data {
     pub u32: DataForType<u32, 10>,
     pub u64: DataForType<u64, 20>,
     pub u128: DataForType<u128, 39>,
 }
 
-pub(crate) struct DataForType<T, const N: usize> {
+pub struct DataForType<T, const N: usize> {
     pub count: usize,
     pub mixed: Vec<T>,
     pub by_length: [Vec<T>; N],
@@ -19,7 +19,7 @@ pub(crate) struct DataForType<T, const N: usize> {
 }
 
 impl Data {
-    pub(crate) fn random(count: usize, unpredictable: bool) -> Self {
+    pub fn random(count: usize, unpredictable: bool) -> Self {
         let mut rng = SmallRng::seed_from_u64(1);
         Data {
             u32: DataForType::random(&mut rng, count, unpredictable),

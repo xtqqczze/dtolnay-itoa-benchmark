@@ -1,9 +1,7 @@
 use rand::distr::uniform::SampleUniform;
 use std::ops::Sub;
 
-pub(crate) trait Unsigned:
-    Copy + SampleUniform + From<bool> + Sub<Output = Self> + PartialOrd
-{
+pub trait Unsigned: Copy + SampleUniform + From<bool> + Sub<Output = Self> + PartialOrd {
     const ONE: Self;
     const TEN: Self;
     const MAX: Self;
