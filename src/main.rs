@@ -1,4 +1,3 @@
-#![cfg_attr(int_format_into, feature(int_format_into))]
 #![allow(
     clippy::cast_possible_truncation,
     clippy::cast_precision_loss,
