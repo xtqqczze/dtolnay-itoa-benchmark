@@ -1,5 +1,3 @@
-#![cfg_attr(itoa_benchmark_build_probe, feature(int_format_into))]
-
 use core::fmt::NumBuffer;
 
 pub fn u32toa_numbuffer(value: u32, f: &dyn Fn(&str)) {
