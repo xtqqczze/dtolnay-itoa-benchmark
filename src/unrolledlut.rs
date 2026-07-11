@@ -16,6 +16,8 @@
 //
 // Copyright (c) 2017 nyronium (nyronium@genthree.io)
 
+#![allow(clippy::redundant_else)]
+
 use crate::digitslut::DIGITS_LUT as TWO_DIGITS_TO_STR;
 use std::mem::MaybeUninit;
 use std::slice;
