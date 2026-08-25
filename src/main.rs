@@ -8,7 +8,8 @@
     clippy::nonminimal_bool,
     clippy::similar_names,
     clippy::too_many_lines,
-    clippy::unreadable_literal
+    clippy::unreadable_literal,
+    clippy::used_underscore_items
 )]
 
 mod args;
